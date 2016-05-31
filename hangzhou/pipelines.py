@@ -1,0 +1,23 @@
+# -*- coding: utf-8 -*-
+
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+
+import json  
+import codecs  
+  
+  
+class hangzhouPipeline(object):  
+    def __init__(self):  
+        self.file = codecs.open('hangzhouJobs.json', 'wb', encoding='utf-8')  
+  
+    def process_item(self, item, spider): 
+        if item['salary'] == [] or item['location1'] == [] or item['jobDesc'] == [] or item['jobType']==[] or  item['degree']==[]:
+        	return item
+        else:
+        	line = ','.join(item['salary']+item['location1'] + item['jobDesc']+item['jobType']+ item['degree'])  + "\n"
+        # print line  
+        self.file.write(line.decode("utf-8"))  
+        return item  
